@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_toLeftOf="@+id/sale_icon"
+        >
+
+
+<LinearLayout
+    android:id="@+id/product_and_price"
+    android:layout_width="match_parent"
+    android:gravity="top"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:layout_marginLeft="16dp">
+
+    <TextView
+        android:id="@+id/product_name"
+        android:text="aer conditionat"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:textSize="22sp"
+        />
+    <TextView
+        android:id="@+id/price"
+        android:text="1000"
+        android:layout_marginLeft="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        />
+    <TextView
+        android:id="@+id/price_tag"
+        android:text=" - Eur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="36dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        />
+
+
+
+</LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/text_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp">
+
+        <TextView
+            android:id="@+id/quantity_tag"
+            android:text="In stock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:gravity="bottom"
+            />
+        <TextView
+            android:id="@+id/quantity"
+            android:text="15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_weight="1"
+            android:layout_marginLeft="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="bottom"
+            />
+    </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/sale_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:src="@drawable/cart_"
+        />
+</RelativeLayout>
