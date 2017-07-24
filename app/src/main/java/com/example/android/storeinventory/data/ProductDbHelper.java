@@ -17,6 +17,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
             ProductEntry.COLUMN_PRODUCT + " TEXT NOT NULL," +
             ProductEntry.COLUMN_QUANTITY + " INTEGER NOT NULL DEFAULT 0," +
             ProductEntry.COLUMN_PRICE + " INTEGER NOT NULL DEFAULT 0," +
+            ProductEntry.COLUMN_IMAGE + " TEXT," +
             ProductEntry.COLUMN_SUPLIER + " TEXT NOT NULL);";
 
     private static final String SQL_DELETE_ENTRIES =

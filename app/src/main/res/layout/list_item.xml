@@ -95,6 +95,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:clickable="true"
+        android:focusable="false"
         android:src="@drawable/cart_"
         />
 </RelativeLayout>

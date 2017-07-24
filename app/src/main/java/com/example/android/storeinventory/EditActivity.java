@@ -1,29 +1,41 @@
 package com.example.android.storeinventory;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import static com.example.android.storeinventory.R.id.quantity;
 import static com.example.android.storeinventory.data.ProductContract.ProductEntry;
+import static com.example.android.storeinventory.data.ProductProvider.LOG_TAG;
 
 /**
  * Created by Bogdan on 7/20/2017.
@@ -31,11 +43,12 @@ import static com.example.android.storeinventory.data.ProductContract.ProductEnt
 
 public class EditActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-
+    private static final int PICK_IMAGE_REQUEST = 0;
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
     /** Content URI for the existing productt (null if it's a new product) */
-    private Uri mCurrentProductUri;
+    private Uri mUri;
+    private Uri imageUri;
 
     /** EditText field to enter the product name */
     private EditText mNameEditText;
@@ -53,6 +66,10 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
     private boolean mProductHasChanged = false ;
 
     private int mQuantity ;
+
+    private ImageView mImageView ;
+
+    private Button mSetImage ;
 
     private Button mDecrementButton ;
 
@@ -72,9 +89,9 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_edit);
 
         Intent intent = getIntent();
-        mCurrentProductUri = intent.getData();
+        mUri = intent.getData();
 
-        if (mCurrentProductUri == null) {
+        if (mUri == null) {
             // This is a new pet, so change the app bar to say "Add a Pet"
             setTitle(getString(R.string.editor_activity_title_new_product));
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
@@ -93,9 +110,10 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         mQuantityEditText = (EditText)findViewById(R.id.edit_product_quantity);
         mSuplierEditText = (EditText)findViewById(R.id.edit_suplier);
         mPriceEditText = (EditText)findViewById(R.id.edit_product_price);
-        sendOrder = (Button)findViewById(R.id.order_products);
         mDecrementButton = (Button)findViewById(R.id.decrement_button);
         mIncrementButton = (Button)findViewById(R.id.increment_button);
+        mSetImage = (Button)findViewById(R.id.choose_picture);
+        mImageView = (ImageView)findViewById(R.id.product_picture);
 
         mNameEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
@@ -120,6 +138,95 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         });
+        mSetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openImageSelector();
+            }
+        });
+    }
+    public void openImageSelector() {
+        Intent intent;
+
+        if (Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code READ_REQUEST_CODE.
+        // If the request code seen here doesn't match, it's the response to some other intent,
+        // and the below code shouldn't run at all.
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            // The document selected by the user won't be returned in the intent.
+            // Instead, a URI to that document will be contained in the return intent
+            // provided to this method as a parameter.  Pull that uri using "resultData.getData()"
+
+            if (resultData != null) {
+                imageUri = resultData.getData();
+                Log.i(LOG_TAG, "Uri: " + imageUri.toString());
+
+                mImageView.setImageBitmap(getBitmapFromUri(imageUri));
+            }
+        }
+    }
+
+    public Bitmap getBitmapFromUri(Uri uri) {
+
+        if (uri == null || uri.toString().isEmpty())
+            return null;
+
+        // Get the dimensions of the View
+        int targetW = mImageView.getWidth();
+        int targetH = mImageView.getHeight();
+
+        InputStream input = null;
+        try {
+            input = this.getContentResolver().openInputStream(uri);
+
+            // Get the dimensions of the bitmap
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            bmOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+
+            int photoW = bmOptions.outWidth;
+            int photoH = bmOptions.outHeight;
+
+            // Determine how much to scale down the image
+            int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false;
+            bmOptions.inSampleSize = scaleFactor;
+            bmOptions.inPurgeable = true;
+
+            input = this.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
+            input.close();
+            return bitmap;
+
+        } catch (FileNotFoundException fne) {
+            Log.e(LOG_TAG, "Failed to load image.", fne);
+            return null;
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Failed to load image.", e);
+            return null;
+        } finally {
+            try {
+                input.close();
+            } catch (IOException ioe) {
+
+            }
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,7 +239,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         // If this is a new pet, hide the "Delete" menu item.
-        if (mCurrentProductUri == null) {
+        if (mUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
         }
@@ -189,9 +296,9 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Check if this is supposed to be a new pet
         // and check if all the fields in the editor are blank
-        if (mCurrentProductUri == null &&
+        if (mUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(suplierString) &&
-                TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(priceString)) {
+                TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(priceString) && imageUri == null) {
             // Since no fields were modified, we can return early without creating a new pet.
             // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
@@ -225,8 +332,16 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 price = Integer.parseInt(priceString);
             }
             values.put(ProductEntry.COLUMN_PRICE,price);
+            if (imageUri == null) {
+                imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                        "://" + getResources().getResourcePackageName(R.drawable.empty_cart) +
+                        '/' + getResources().getResourceTypeName(R.drawable.empty_cart) +
+                        '/' + getResources().getResourceEntryName(R.drawable.empty_cart));
+            }
+            values.put(ProductEntry.COLUMN_IMAGE,imageUri.toString());
 
-            if (mCurrentProductUri == null) {
+
+            if (mUri == null) {
                 // This is a NEW pet, so insert a new pet into the provider,
                 // returning the content URI for the new pet.
                 Uri newUri = getContentResolver().insert(ProductEntry.CONTENT_URI, values);
@@ -246,7 +361,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 // and pass in the new ContentValues. Pass in null for the selection and selection args
                 // because mCurrentPetUri will already identify the correct row in the database that
                 // we want to modify.
-                int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
+                int rowsAffected = getContentResolver().update(mUri, values, null, null);
 
                 // Show a toast message depending on whether or not the update was successful.
                 if (rowsAffected == 0) {
@@ -271,11 +386,12 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 ProductEntry.COLUMN_PRODUCT,
                 ProductEntry.COLUMN_SUPLIER,
                 ProductEntry.COLUMN_QUANTITY,
-                ProductEntry.COLUMN_PRICE };
+                ProductEntry.COLUMN_PRICE,
+                ProductEntry.COLUMN_IMAGE};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
-                mCurrentProductUri,         // Query the content URI for the current pet
+                mUri,         // Query the content URI for the current pet
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments
@@ -293,17 +409,20 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             int suplierColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_SUPLIER);
             int quantityColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY);
             int priceColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRICE);
+            int imageColumnIndex = cursor.getColumnIndex(ProductEntry.COLUMN_IMAGE);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             String suplier = cursor.getString(suplierColumnIndex);
             mQuantity = cursor.getInt(quantityColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
+            String image = cursor.getString(imageColumnIndex);
 
             mNameEditText.setText(name);
             mSuplierEditText.setText(suplier);
             mQuantityEditText.setText(Integer.toString(quantity));
             mPriceEditText.setText(Integer.toString(price));
+            mImageView.setImageURI(Uri.parse(image));
         }
         sendOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,6 +438,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         mSuplierEditText.setText("");
         mQuantityEditText.setText("");
         mPriceEditText.setText("");
+        imageUri = null;
     }
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {
@@ -391,11 +511,11 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private void deleteProduct() {
         // Only perform the delete if this is an existing pet.
-        if (mCurrentProductUri != null) {
+        if (mUri != null) {
             // Call the ContentResolver to delete the pet at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPetUri
             // content URI already identifies the pet that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
+            int rowsDeleted = getContentResolver().delete(mUri, null, null);
             // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
                 // If no rows were deleted, then there was an error with the delete.

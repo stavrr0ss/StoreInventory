@@ -33,14 +33,13 @@ public class ProductCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
 
-        final Uri uri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI,
+        final Uri mUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI,
                 cursor.getInt(cursor.getColumnIndexOrThrow(ProductEntry._ID)));
 
         TextView productName = (TextView)view.findViewById(R.id.product_name);
         TextView productQuantity = (TextView)view.findViewById(quantity);
         TextView productPrice = (TextView)view.findViewById(R.id.price);
 
-        final int productId = cursor.getInt(cursor.getColumnIndex(ProductEntry._ID));
         String product = cursor.getString(cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT));
         final int quantity = cursor.getInt(cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY));
         String price = cursor.getString(cursor.getColumnIndex(ProductEntry.COLUMN_PRICE));
@@ -58,7 +57,7 @@ public class ProductCursorAdapter extends CursorAdapter {
                     ContentValues values = new ContentValues();
                     values.put(ProductEntry.COLUMN_QUANTITY, remainingQuantity);
                     // Update the database
-                    context.getContentResolver().update(uri,values,null,null);
+                    context.getContentResolver().update(mUri,values,null,null);
                 } else {
                     Toast.makeText(context, R.string.quantity_not_available_toast, Toast.LENGTH_SHORT).show();
                 }
