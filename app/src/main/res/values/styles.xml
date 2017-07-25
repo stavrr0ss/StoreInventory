@@ -25,7 +25,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
-    <!-- Style for the measurement units for an EditText field in the editor -->
+    <!-- Style for the curency units for an EditText field in the editor -->
     <style name="EditorUnitsStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -33,5 +33,119 @@
         <item name="android:paddingRight">16dp</item>
         <item name="android:paddingTop">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+    <!--Style for  text fields in Catalog Activity-->
+    <style name="EmptyTitleText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_below">@+id/empty_store_image</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:text">@string/empty_view_title_text</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+    <style name="EmptySubtittleText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_below">@+id/empty_title_text</item>
+        <item name="android:text">@string/empty_view_subtitle_text</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:paddingTop">@dimen/vertical_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+    <style name="FloatingActionButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+    </style>
+    <style name="decrementButtons">
+        <item name="android:layout_width">@dimen/increment_button_width</item>
+        <item name="android:layout_height">@dimen/increment_button_height</item>
+        <item name="android:text">@string/minus_button</item>
+        <item name="android:layout_marginBottom">@dimen/vertical_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin_horizontal</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+    <style name="incrementButtons">
+        <item name="android:layout_width">@dimen/increment_button_width</item>
+        <item name="android:layout_height">@dimen/increment_button_height</item>
+        <item name="android:text">@string/plus_button</item>
+        <item name="android:layout_marginBottom">@dimen/vertical_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin_horizontal</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="send_mail_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/order_button_text</item>
+        <item name="android:layout_marginBottom">@dimen/vertical_margin</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="ProductImage">
+        <item name="android:layout_width">@dimen/image_width</item>
+        <item name="android:layout_height">@dimen/image_height</item>
+        <item name="android:padding">@dimen/image_padding</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:layout_marginTop">@dimen/image_margin_top</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <!--List Item styles-->
+    <style name="product_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_size_product</item>
+    </style>
+    <style name="price_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:layout_marginLeft">@dimen/image_padding</item>
+    </style>
+
+    <style name="price_curency">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_marginRight">@dimen/curency_margin_horizontal</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:text">@string/curency</item>
+    </style>
+    
+    <style name="quantity_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/text_size_quantity_label</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:text">@string/in_stock_textView</item>
+    </style>
+    <style name="quantity">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin_horizontal</item>
+        <item name="android:textSize">@dimen/text_size_quantity</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="sale_icon">
+        <item name="android:layout_width">@dimen/sale_icon_dimen</item>
+        <item name="android:layout_height">@dimen/sale_icon_dimen</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin_horizontal</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">false</item>
     </style>
 </resources>

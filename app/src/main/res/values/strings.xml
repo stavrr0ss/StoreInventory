@@ -52,41 +52,70 @@
     <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
     <string name="empty_view_title_text">It\'s a bit lonely here...</string>
 
-    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
+    <!-- Subtitle text for the empty view that prompts the user to add a product  -->
     <string name="empty_view_subtitle_text">Get started by adding a productt</string>
-    <string name="editor_update_product_failed">Update error encountered</string>
-    <string name="editor_update_product_successful">Pet updated with succes</string>
 
-    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="editor_update_product_failed">Update error encountered</string>
+
+    <string name="editor_update_product_successful">Product updated with succes</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes -->
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
 
-    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to discard a user's changes -->
     <string name="discard">Discard</string>
 
-    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to keep editing the current product  -->
     <string name="keep_editing">Keep Editing</string>
+
+    <!--ActionBar title for EditActivity , when in Edit mode-->
     <string name="editor_activity_title_edit_product">Edit Product</string>
-    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
+
+    <!-- Toast message in editor when current product was successfully deleted-->
     <string name="editor_delete_pet_successful">Product deleted</string>
 
-    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
+    <!-- Toast message in editor when current product has failed to be deleted -->
     <string name="editor_delete_product_failed">Error with deleting product</string>
 
-    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
+    <!-- Dialog message to ask the user to confirm deleting the current product-->
     <string name="delete_dialog_msg">Delete this product?</string>
 
-    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to confirm deleting the current product-->
     <string name="delete">Delete</string>
 
-    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to cancel deletion of the current product-->
     <string name="cancel">Cancel</string>
 
-    <!-- Label for the pet's breed if the breed is unknown [CHAR LIMIT=20] -->
-    <string name="unknown_breed">Unknown breed</string>
+    <!--Hint for quantity field-->
     <string name="hint_product_quantity">Quantity</string>
+
+    <!--Category label - suplier field-->
     <string name="category_suplier">Suplier</string>
+
+    <!--Email subject-->
     <string name="email_subject">New order to</string>
+
+    <!--Email text-->
     <string name="email_text">Place an order for</string>
+
+    <!--Toast message - invalid decrement operation-->
     <string name="invalid_decrement_toast">Not enough products in stock !</string>
+
+    <!--Toast message - qunatity not availabe for selling-->
     <string name="quantity_not_available_toast">No more products in stock !</string>
+
+    <!--Log message - failed image upload-->
+    <string name="log_failed_image">Failed to load image.</string>
+    <string name="sanity_checks_name">Product requires a name !</string>
+    <string name="sanity_checks_suplier">No suplier mentioned !</string>
+    <string name="sanity_checks_quantity">Quantity required !</string>
+    <string name="sanity_checks_price">Price needed for product !</string>
+    <string name="order_button_text">Order</string>
+    <string name="minus_button">-</string>
+    <string name="plus_button">+</string>
+    <string name="select_picture_button">Set Picture</string>
+    <string name="curency">- Eur</string>
+    <string name="in_stock_textView">In stock</string>
+    <string name="toast_requires_image">Product must have an image</string>
+
 </resources>

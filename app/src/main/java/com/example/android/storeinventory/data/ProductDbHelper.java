@@ -20,14 +20,11 @@ public class ProductDbHelper extends SQLiteOpenHelper {
             ProductEntry.COLUMN_IMAGE + " TEXT," +
             ProductEntry.COLUMN_SUPLIER + " TEXT NOT NULL);";
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + ProductEntry.TABLE_NAME;
-
     public static final String DATABASE_NAME = "store.db";
-    public static final int DATABASE_VERSION = 1 ;
+    public static final int DATABASE_VERSION = 1;
 
-    public ProductDbHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    public ProductDbHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

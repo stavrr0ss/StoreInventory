@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import static com.example.android.storeinventory.data.ProductContract.ProductEntry;
 
-public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int PRODUCT_LOADER = 0;
     ProductCursorAdapter mCursorAdapter;
@@ -36,7 +36,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-
         ListView petListView = (ListView) findViewById(R.id.pet_list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
@@ -51,13 +50,13 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CatalogActivity.this, EditActivity.class);
 
-                Uri currentPetUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI,id);
+                Uri currentPetUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
 
                 intent.setData(currentPetUri);
                 startActivity(intent);
             }
         });
-        getLoaderManager().initLoader(PRODUCT_LOADER, null , this);
+        getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
     }
 
     @Override
