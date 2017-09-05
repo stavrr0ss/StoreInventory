@@ -117,5 +117,6 @@
     <string name="curency">- Eur</string>
     <string name="in_stock_textView">In stock</string>
     <string name="toast_requires_image">Product must have an image</string>
+    <string name="sanity_checks_image">Product needs image !</string>
 
 </resources>

@@ -33,7 +33,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.example.android.storeinventory.R.id.quantity;
 import static com.example.android.storeinventory.data.ProductContract.ProductEntry;
 import static com.example.android.storeinventory.data.ProductProvider.LOG_TAG;
 
@@ -269,6 +268,7 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveProduct();
+                finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -288,7 +288,6 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
                 showUnsavedChangesDialog(discardButtonClickListener);
                 return true;
         }
-        finish();
         return super.onOptionsItemSelected(item);
 
     }
@@ -317,7 +316,8 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
             Toast.makeText(EditActivity.this, R.string.sanity_checks_quantity, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(priceString)) {
             Toast.makeText(EditActivity.this, R.string.sanity_checks_price, Toast.LENGTH_SHORT).show();
-
+        } else if (imageUri == null){
+            Toast.makeText(this, R.string.sanity_checks_image, Toast.LENGTH_SHORT).show();
         } else {
             ContentValues values = new ContentValues();
             values.put(ProductEntry.COLUMN_PRODUCT, nameString);
@@ -407,9 +407,9 @@ public class EditActivity extends AppCompatActivity implements LoaderManager.Loa
 
             mNameEditText.setText(name);
             mSuplierEditText.setText(suplier);
-            mQuantityEditText.setText(Integer.toString(quantity));
+            mQuantityEditText.setText(Integer.toString(mQuantity));
             mPriceEditText.setText(Integer.toString(price));
-
+            imageUri = Uri.parse(image);
             mImageView.setImageBitmap(getBitmapFromUri(imageUri));
 
 
