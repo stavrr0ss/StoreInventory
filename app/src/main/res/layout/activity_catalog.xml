@@ -6,7 +6,7 @@
     tools:context=".CatalogActivity">
 
     <ListView
-        android:id="@+id/pet_list"
+        android:id="@+id/product_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/vertical_margin" />

@@ -36,7 +36,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-        ListView productListView = (ListView) findViewById(R.id.pet_list);
+        ListView productListView = (ListView) findViewById(R.id.product_list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
@@ -50,9 +50,9 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CatalogActivity.this, EditActivity.class);
 
-                Uri currentPetUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
+                Uri currentProductUri = ContentUris.withAppendedId(ProductEntry.CONTENT_URI, id);
 
-                intent.setData(currentPetUri);
+                intent.setData(currentProductUri);
                 startActivity(intent);
             }
         });

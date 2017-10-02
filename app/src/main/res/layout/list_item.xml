@@ -54,5 +54,10 @@
     <ImageView
         android:id="@+id/sale_icon"
         style="@style/sale_icon"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
         android:src="@drawable/cart_" />
 </RelativeLayout>
