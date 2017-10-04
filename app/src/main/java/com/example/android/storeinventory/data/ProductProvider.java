@@ -127,7 +127,7 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException("Product requires a price");
         }
         // Check that the suplier is not null
-        String suplier = values.getAsString(ProductEntry.COLUMN_PRODUCT);
+        String suplier = values.getAsString(ProductEntry.COLUMN_SUPLIER);
         if (suplier == null) {
             throw new IllegalArgumentException("Product requires a suplier");
         }
