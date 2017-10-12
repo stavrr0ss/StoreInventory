@@ -122,7 +122,7 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException("Product quantity not available");
         }
         // If the price is provided, check that it's greater than or equal to 0
-        Integer price = values.getAsInteger(ProductEntry.COLUMN_QUANTITY);
+        Integer price = values.getAsInteger(ProductEntry.COLUMN_PRICE);
         if (price != null && price < 0) {
             throw new IllegalArgumentException("Product requires a price");
         }
