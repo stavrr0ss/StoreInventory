@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.example.android.storeinventory.R.id.price;
 import static com.example.android.storeinventory.R.id.quantity;
 import static com.example.android.storeinventory.data.ProductContract.ProductEntry;
 
@@ -39,15 +40,15 @@ public class ProductCursorAdapter extends CursorAdapter {
 
         TextView productName = (TextView) view.findViewById(R.id.product_name);
         TextView productQuantity = (TextView) view.findViewById(quantity);
-        TextView productPrice = (TextView) view.findViewById(R.id.price);
+        TextView productPrice = (TextView) view.findViewById(price);
 
         String product = cursor.getString(cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT));
         final int quantity = cursor.getInt(cursor.getColumnIndex(ProductEntry.COLUMN_QUANTITY));
-        String price = cursor.getString(cursor.getColumnIndex(ProductEntry.COLUMN_PRICE));
+        int price = cursor.getInt(cursor.getColumnIndex(ProductEntry.COLUMN_PRICE));
 
         productName.setText(product);
         productQuantity.setText(String.valueOf(quantity));
-        productPrice.setText(price);
+        productPrice.setText(String.valueOf(price));
 
         ImageView sellProduct = (ImageView) view.findViewById(R.id.sale_icon);
         sellProduct.setOnClickListener(new View.OnClickListener() {
